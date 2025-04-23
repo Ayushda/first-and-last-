@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waiting...</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffd6e0, #fff3f3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      flex-direction: column;
+    }
+    .card {
+      background: white;
+      padding: 50px 40px;
+      border-radius: 30px;
+      box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
+      text-align: center;
+      max-width: 90%;
+      animation: fadeIn 1s ease-in-out;
+    }
+    h1 {
+      color: #e60073;
+      margin-bottom: 25px;
+      font-size: 2rem;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    #yes {
+      background-color: #ff69b4;
+      color: white;
+    }
+    #yes:hover {
+      background-color: #ff1493;
+    }
+    #no {
+      background-color: #aaa;
+      color: white;
+      position: relative;
+    }
+    #flowers, #message {
+      margin-top: 30px;
+    }
+    .flower {
+      width: 50px;
+      margin: 10px;
+      animation: pop 0.5s ease-in-out;
+    }
+    #message p {
+      font-size: 1.3rem;
+      color: #d63384;
+      margin-top: 20px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    #fade-msg {
+      transition: opacity 0.6s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pop {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
+    }
+    @media (max-width:300px) {
+      .buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>あなたは私を愛していますか 🥺💞</h1>
+    <div class="buttons">
+      <button id="yes">Yes</button>
+      <button id="no">No</button>
+    </div>
+    <div id="flowers"></div>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+    const flowersDiv = document.getElementById("flowers");
+    const messageDiv = document.getElementById("message");
+
+    const shayariLines = [
+      "Chhoti si game mein chhupi thi baat,",
+      "Ek click se ho gaya dil ka izhaar ka saath.",
+      "",
+      "Anata wa watashi o aishiteimasu ka? puchha maine pyaar se,",
+      "Yes bola toh khil uthe phool, khushbu chali hawa se.",
+      "",
+      "No pe haansi aayi, kyunki button bhaag gaya tha,",
+      "Mera dil fir bhi wahi ruk gaya tha.",
+      "",
+      "Tu haan kehde, bas itna hi armaan hai,",
+      "Tere muskurane mein hi toh meri jaan hai. 💖"
+    ];
+
+    yesBtn.addEventListener("click", () => {
+      flowersDiv.innerHTML += `
+        <svg class="flower" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="12" fill="#ff69b4"/>
+          <path d="M32 0 C34 20, 64 20, 32 32" fill="#ff1493" />
+          <path d="M32 0 C30 20, 0 20, 32 32" fill="#ff1493" />
+          <path d="M32 64 C34 44, 64 44, 32 32" fill="#ff1493" />
+          <path d="M32 64 C30 44, 0 44, 32 32" fill="#ff1493" />
+        </svg>
+      `;
+
+      messageDiv.innerHTML = `<p id="fade-msg">You just made my day! I really like you... like, a LOT 💘</p>`;
+
+      setTimeout(() => {
+        const fadeMsg = document.getElementById("fade-msg");
+        fadeMsg.style.opacity = 0;
+
+        setTimeout(() => {
+          messageDiv.innerHTML = "<p id='typed-text'></p>";
+          const typedText = document.getElementById("typed-text");
+          let lineIndex = 0;
+          let charIndex = 0;
+
+          function typeLine() {
+            if (lineIndex < shayariLines.length) {
+              if (charIndex < shayariLines[lineIndex].length) {
+                typedText.innerHTML += shayariLines[lineIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(typeLine, 40);
+              } else {
+                typedText.innerHTML += "<br><br>";
+                lineIndex++;
+                charIndex = 0;
+                setTimeout(typeLine, 400);
+              }
+            }
+          }
+
+          typeLine();
+        }, 600);
+      }, 2500);
+    });
+
+    noBtn.addEventListener("mouseover", () => {
+      const randX = Math.floor(Math.random() * 200 - 100);
+      const randY = Math.floor(Math.random() * 200 - 100);
+      noBtn.style.transform = `translate(${randX}px, ${randY}px)`;
+    });
+  </script>
+</body>
+</html>
